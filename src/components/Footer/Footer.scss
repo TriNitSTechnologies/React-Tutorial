@@ -1,0 +1,9 @@
+@import '../../colors.scss';
+
+div.footer {
+    h1 {
+        background-color: lightsalmon;
+        border-bottom: 1px solid black;
+        color: $primary;
+    }
+}

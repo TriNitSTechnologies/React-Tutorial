@@ -16,6 +16,8 @@ import Component1 from "./components/Login/Component1";
 import Login from "./components/Login/Login";
 import Registration from "./components/Registration/Registration";
 import Sidebar from "./components/Sidebar/Sidebar";
+import DemoParent from "./components/Demo/DemoParent";
+import ErrorBoundary from "./components/Demo/ErrorBoundary";
 
 const Employee = React.lazy(() => import("./components/Employee/Employee.js"));
 const Users = React.lazy(() => import("./components/Users.js"));
@@ -78,6 +80,16 @@ function MyApp() {
 
             {username ? protectedRouteContent : null}
 
+            <Route pat="/demo">
+              <ErrorBoundary>
+                <DemoParent />
+              </ErrorBoundary>
+             
+            </Route>
+
+            <Route pat="/cmp1">
+              <Component1 />
+            </Route>
             <Route pat="/cmp1">
               <Component1 />
             </Route>

@@ -1,12 +1,61 @@
+import { Component } from "react";
 
-export default function DemoParent(props) {
-    return (
-      <div>
-        <h1>{props.title}</h1>
-        <div>{props.children}</div>
+export default class DemoParent extends Component {
 
-
-      </div>
-    );
+  constructor(props){
+    super(props);
+    console.log("DemoParent constructor");
+    this.state = {
+      text: "Trinits technology"
+    }
   }
 
+  static getDerivedStateFromProps(props, state){
+    console.log("DemoParent getDerivedStateFromProps");
+    return {
+      ...state,
+      name: props.name  
+    }
+  }
+
+  render() {
+    console.log("DemoParent render");
+    return (
+      <div>
+        <h1>Parent {this.state.text}  - {this.state.name}</h1>
+        <h1>Salary: {this.state.salary}</h1>
+      </div>
+    )
+  }
+
+  componentDidMount() {
+    console.log("DemoParent componentDidMount");
+    setTimeout(() => {
+      console.log("componentDidMount 1");
+      this.setState({
+        ...this.state,
+        salary: 300000,
+      });
+    }, 5000);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("DemoParent shouldComponentUpdate");
+    return true;
+  }
+
+  getSnapshotBeforeUpdate(props, state) {
+    console.log(
+      "getSnapshotBeforeUpdate prev value:" + state.salary + " current value" + this.state.salary
+    );
+    return null;
+  }
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate" + this.state.salary);
+  }
+
+  componentWillUnmount() {
+    console.log("componentWillUnmount");
+  }
+}

@@ -5,6 +5,8 @@ import { login } from "../../Store/User.slice";
 import Loader from "../Loader/Loader";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 
+import classes from "./Header.module.scss";
+
 export default function Header() {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -29,7 +31,7 @@ export default function Header() {
     <>
       <div>
         {/* {loading ? <Loader />: null}  */}
-        <h1 className="bg-warning">
+        <h1 className={`${classes.fontWhite}`}>
           Payroll management
           <button onClick={handleLogout} title="Click on logout" id="loginBtn">
             {username ? "Logout" : "Login"}
