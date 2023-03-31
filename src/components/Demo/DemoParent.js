@@ -1,4 +1,5 @@
 import { Component } from "react";
+import DemoChild from "./DemoChild";
 
 export default class DemoParent extends Component {
 
@@ -22,8 +23,7 @@ export default class DemoParent extends Component {
     console.log("DemoParent render");
     return (
       <div>
-        <h1>Parent {this.state.text}  - {this.state.name}</h1>
-        <h1>Salary: {this.state.salary}</h1>
+        <DemoChild />
       </div>
     )
   }

@@ -18,6 +18,9 @@ import Registration from "./components/Registration/Registration";
 import Sidebar from "./components/Sidebar/Sidebar";
 import DemoParent from "./components/Demo/DemoParent";
 import ErrorBoundary from "./components/Demo/ErrorBoundary";
+import UseCallBackDemo from "./components/Demo/UseCallBackDemo";
+import Companies from "./components/Companies/Compnies";
+import { COMPANIES_URL, EMPLOYEE_URL } from "./utils/Endpoints";
 
 const Employee = React.lazy(() => import("./components/Employee/Employee.js"));
 const Users = React.lazy(() => import("./components/Users.js"));
@@ -39,7 +42,7 @@ function MyApp() {
         
       </Route>
       <Route path="/company" exact>
-        <Component1 />
+        <Companies url={EMPLOYEE_URL}/>
       </Route>
       <Route path="/users" exact>
         <Suspense fallback={<div>Loading</div>}>
@@ -79,6 +82,10 @@ function MyApp() {
             </Route>
 
             {username ? protectedRouteContent : null}
+
+            <Route pat="/callback">
+              <UseCallBackDemo />
+            </Route>
 
             <Route pat="/demo">
               <ErrorBoundary>

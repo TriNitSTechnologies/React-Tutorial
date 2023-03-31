@@ -12,7 +12,7 @@ export default function Sidebar(){
             </div>
 
             <div>
-                <Link to="/companies">Companies</Link>
+                <Link to="/company">Companies</Link>
             </div>
             <div>
                 <Link to="/users">Users</Link>
