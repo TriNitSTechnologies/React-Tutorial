@@ -8,7 +8,7 @@ API.interceptors.request.use(
     console.log('Request interceptor: ');
 
      // Do something before request is sent
-     const token = sessionStorage.getItem("token");
+     const token = sessionStorage.getItem("SESSION_KEY");
      config.headers = {
        "Authorization-key": `Bearer ${token}`,
      };

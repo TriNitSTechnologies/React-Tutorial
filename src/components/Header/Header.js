@@ -21,6 +21,7 @@ export default function Header() {
       dispatch(login(""));
     }
     history.push("/login");
+    sessionStorage.removeItem("SESSION_KEY");
   }
 
   if (loading) {
@@ -42,7 +43,31 @@ export default function Header() {
             variant="info"
             content="Click on the button to logout"
           />
-          <span className="float-end">{username ? username : ""} </span>
+          {username ? (
+            <div class="dropdown d-inline-block">
+              <button
+                class="btn btn-secondary dropdown-toggle"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+               {username}
+              </button>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#">
+                   My profile
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" onClick={ handleLogout}>
+                    Logout
+                  </a>
+                </li>
+              
+              </ul>
+            </div>
+          ) : null}
         </h1>
       </div>
     </>

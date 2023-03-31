@@ -4,7 +4,7 @@ import Loader from "../Loader/Loader";
 import EmployeeForm from "./EmployeeForm";
 import { deleteEmployee, loadEmployees, saveEmployee, updateEmployee } from "./Hooks/Api";
 import { toast } from 'react-toastify';
-
+import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
 
 export default function Employee(props) {
   // let employees = [];
@@ -12,10 +12,11 @@ export default function Employee(props) {
   const [loading, setLoading] = useState(true);
   const [displayEmpForm, setDisplayEmpForm] = useState(false);
   const [selectedEmp, setSelectedEmp] = useState({});
+  const [pageNo, setPageNo] = useState(1);
 
   useEffect(() => {
-    loadEmployees(setData);
-  }, []);
+    loadEmployees(pageNo, setData);
+  }, [pageNo]);
 
   function addEmployee() {
     setSelectedEmp({});
@@ -71,6 +72,19 @@ export default function Employee(props) {
     setSelectedEmp(emp);
   }
 
+  function handlePageRight(){
+    setPageNo(pageNo + 1);
+  }
+
+
+  function handlePageLeft(){
+    if(pageNo > 1){
+      setPageNo(pageNo - 1);
+    }else {
+      toast.warning("Page number cannot be less than 1")
+    }
+  }
+
   if (loading) {
     return <Loader>Loading emp...</Loader>;
   }
@@ -86,9 +100,9 @@ export default function Employee(props) {
   }
 
   return (
-    <div className="employee">
+    <div className="employee ">
       <h1>
-        Employee{" "}
+        Employee ({employees?.length})
         <span className="float-end me-2">
           <button className="btn btn-outline-primary" onClick={addEmployee}>
             Add Emp
@@ -137,6 +151,14 @@ export default function Employee(props) {
           })}
         </tbody>
       </table>
+
+      <div className="d-flex justify-content-center">
+        <span className="mx-auto">
+        <button className="btn btn-primary" onClick={handlePageLeft}><AiFillLeftCircle /></button>
+        <span className="mx-2">{pageNo}</span>
+        <button className="btn btn-primary" onClick={handlePageRight}> <AiFillRightCircle/> </button>
+        </span>
+      </div>
     </div>
   );
 }

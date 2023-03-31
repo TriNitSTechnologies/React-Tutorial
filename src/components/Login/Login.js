@@ -11,6 +11,7 @@ import { UserContext } from "../../Context/UserContext";
 import { fetchUsers, login } from "../../Store/User.slice";
 import { AiFillAmazonCircle } from "react-icons/ai";
 import { BsFillBoxFill } from "react-icons/bs";
+import { loginApi } from "./Hooks/Api";
 
 export default function Login() {
   //useState
@@ -62,19 +63,31 @@ export default function Login() {
       return;
     }
 
-    if (password === "admin") {
-      
+    let payload = {
+      username,
+      password,
+    };
+    loginApi(payload, (response) => {
+      console.log(response);
+      const key = sessionStorage.getItem('SESSION_KEY');
+      console.log(key);
       dispatch(login(username));
-
       dispatch(fetchUsers());
-
       history.push("/dashboard");
+    });
 
+    // if (password === "admin") {
 
-    } else {
-      errorObj.invalid = "Invalid username or password";
-      setErrors(errorObj);
-    }
+    //   dispatch(login(username));
+
+    //   dispatch(fetchUsers());
+
+    //   history.push("/dashboard");
+
+    // } else {
+    //   errorObj.invalid = "Invalid username or password";
+    //   setErrors(errorObj);
+    // }
   }
 
   return (
@@ -108,9 +121,10 @@ export default function Login() {
 
         <div>
           <button className="btn btn-primary">
-            <AiFillAmazonCircle />  Login</button>
+            <AiFillAmazonCircle /> Login
+          </button>
           <Link to="/registration" className="ms-2 btn btn-secondary">
-           <BsFillBoxFill /> Registration
+            <BsFillBoxFill /> Registration
           </Link>
         </div>
       </form>

@@ -11,8 +11,8 @@ import { EMPLOYEE_URL } from "../../../utils/Endpoints";
 //     });
 // }
 
-export function loadEmployees(callBack) {
-  API.get(EMPLOYEE_URL + "?limit=150&pageNumber=1", {
+export function loadEmployees(pageNo, callBack) {
+  API.get(EMPLOYEE_URL + "?limit=10&pageNumber="+ pageNo, {
     headers: {
         'Sample-Header': 'Sample-Value'
     }
