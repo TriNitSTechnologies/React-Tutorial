@@ -1,4 +1,5 @@
 import { useContext } from "react";
+import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
@@ -12,21 +13,49 @@ import Component1 from "./components/Login/Component1";
 import Login from "./components/Login/Login";
 import Registration from "./components/Registration/Registration";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Users from "./components/Users";
 import { UserContext } from "./Context/UserContext";
 
 function MyApp() {
-  const userObj = useContext(UserContext);
-  const styleClass = userObj.username ? "main-content " : "main-content main-content-full";
+  // const userObj = useContext(UserContext);
+  const username = useSelector((state) => state.user.username);
+
+  const styleClass = username
+    ? "main-content "
+    : "main-content main-content-full";
+
+  const protectedRouteContent = (
+    <>
+      <Route path="/emp" exact>
+        <Employee />
+      </Route>
+      <Route path="/company" exact>
+        <Employee />
+      </Route>
+      <Route path="/users" exact>
+       <Users />
+      </Route>
+
+      <Route path="/emp/:empId" component={EmployeeData} />
+
+      <Route path="/dashboard">
+        <Dashboard />
+      </Route>
+    </>
+  );
+
   return (
     <div className="h-100 w-100">
       <div>
         <Header />
       </div>
 
-      <div  className="main-body">
-        { userObj.username ? <div className="sidebar">
-          <Sidebar />
-        </div> : null}
+      <div className="main-body">
+        {username ? (
+          <div className="sidebar">
+            <Sidebar />
+          </div>
+        ) : null}
         <div className={styleClass}>
           <Switch>
             <Route path="/" exact>
@@ -37,15 +66,7 @@ function MyApp() {
               <Login />
             </Route>
 
-            <Route path="/emp" exact>
-              <Employee />
-            </Route>
-
-            <Route path="/emp/:empId" component={EmployeeData} />
-
-            <Route path="/dashboard">
-              <Dashboard />
-            </Route>
+            {username ? protectedRouteContent : null}
 
             <Route pat="/cmp1">
               <Component1 />

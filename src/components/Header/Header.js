@@ -1,16 +1,21 @@
-import { useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { UserContext } from "../../Context/UserContext";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { login } from "../../Store/User.slice";
 import Loader from "../Loader/Loader";
 
 export default function Header(){
     const [loading, setLoading] = useState(false);
     const history = useHistory();
-    const userObj = useContext(UserContext);
+    // const userObj = useContext(UserContext);
+
+    const dispatch = useDispatch();
+    const username = useSelector((state) => state.user.username);
 
     function handleLogout() {
-        if(userObj.username){
-            userObj.login('');
+        if(username){
+            // userObj.login('');
+            dispatch(login(''));
         }
         history.push("/login");
     }
@@ -27,16 +32,12 @@ export default function Header(){
             <h1 className="bg-warning" >Payroll management 
             
             <button onClick={handleLogout}>
-                {userObj.username ? 'Logout' : 'Login'}
+                {username ? 'Logout' : 'Login'}
             </button>
 
-            <span className="float-end">{userObj.username ? userObj.username: '' } </span>
+            <span className="float-end">{username ? username: '' } </span>
             </h1>
         </div>
         </>
     )
 }
-
-//reelase 16.8 => 2019
-
-//webpack => Babel => React

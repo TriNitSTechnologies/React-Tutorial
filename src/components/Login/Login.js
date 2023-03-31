@@ -5,8 +5,10 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
+import { fetchUsers, login } from "../../Store/User.slice";
 
 export default function Login() {
   //useState
@@ -17,8 +19,12 @@ export default function Login() {
     username: "",
     password: "",
   });
+
+  const dispatch = useDispatch();
+
   const history = useHistory();
-  const userObj = useContext(UserContext);
+  // const userObj = useContext(UserContext);
+  const userObj = {};
 
   function handleInput(event) {
     setUsername(event.target.value);
@@ -55,8 +61,14 @@ export default function Login() {
     }
 
     if (password === "admin") {
-      userObj.login(username);
+      
+      dispatch(login(username));
+
+      dispatch(fetchUsers());
+
       history.push("/dashboard");
+
+
     } else {
       errorObj.invalid = "Invalid username or password";
       setErrors(errorObj);

@@ -1,18 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import MyApp from "./App";
 import { UserContextProvider } from "./Context/UserContext";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
+import Store from "./Store/Store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserContextProvider>
+      {/* <UserContextProvider> */}
+      <Provider store={Store}>
         <MyApp />
-      </UserContextProvider>
+      </Provider>
+      {/* </UserContextProvider> */}
     </BrowserRouter>
   </React.StrictMode>
 );

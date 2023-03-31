@@ -14,6 +14,9 @@ export default function Sidebar(){
             <div>
                 <Link to="/companies">Companies</Link>
             </div>
+            <div>
+                <Link to="/users">Users</Link>
+            </div>
 
             </div>
     )

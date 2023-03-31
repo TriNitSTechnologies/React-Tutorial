@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 export default function Dashboard() {
   const history = useHistory();
+  const users = useSelector((state) => state.user.users);
 
   function navigatePage(path) {
     // history.push(path);
@@ -10,7 +12,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1>Dashboard</h1>
+      <h1>Dashboard {users?.length}</h1>
 
       <div className="d-flex">
         <div className="card" onClick={() => navigatePage('/emp')}>Employees</div>
