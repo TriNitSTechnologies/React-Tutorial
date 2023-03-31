@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import UseCallBackDemoChild from "./UseCallBackDemoChild";
 
 export default function UseCallBackDemo() {
@@ -11,10 +11,14 @@ export default function UseCallBackDemo() {
     setTotal(total + 1);
   }
 
+  const onAddResults = useCallback(()=> {
+    setResults([...results, 100]);
+  }, [results])
+
   return (
     <div>
       <h1>Callback demo</h1>
-      <UseCallBackDemoChild results={results} />
+      <UseCallBackDemoChild results={results} onAddResults={onAddResults}/>
       <button className="mt-4 btn btn-warning" onClick={setTotalMarks}>
         Increment: {total}
       </button>

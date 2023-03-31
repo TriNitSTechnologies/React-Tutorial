@@ -1,7 +1,11 @@
 import { useSelector } from "react-redux";
+import useFetch from "../Hooks/useFetch";
+import { USERS_URL } from "../utils/Endpoints";
 
 export default function Users() {
-    const users =  useSelector((state) => state.user.users);
+    // const users =  useSelector((state) => state.user.users);
+    const users= useFetch(USERS_URL)
+
     return (
         <div>
             <h1>Users ({users.length})</h1>

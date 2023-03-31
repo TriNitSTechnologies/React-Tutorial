@@ -75,19 +75,6 @@ export default function Login() {
       dispatch(fetchUsers());
       history.push("/dashboard");
     });
-
-    // if (password === "admin") {
-
-    //   dispatch(login(username));
-
-    //   dispatch(fetchUsers());
-
-    //   history.push("/dashboard");
-
-    // } else {
-    //   errorObj.invalid = "Invalid username or password";
-    //   setErrors(errorObj);
-    // }
   }
 
   return (

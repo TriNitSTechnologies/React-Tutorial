@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import EmployeeForm from "./EmployeeForm";
-import { deleteEmployee, loadEmployees, saveEmployee, updateEmployee } from "./Hooks/Api";
-import { toast } from 'react-toastify';
+import {
+  deleteEmployee,
+  loadEmployees,
+  saveEmployee,
+  updateEmployee,
+} from "./Hooks/Api";
+import { toast } from "react-toastify";
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
 
 export default function Employee(props) {
@@ -13,6 +18,20 @@ export default function Employee(props) {
   const [displayEmpForm, setDisplayEmpForm] = useState(false);
   const [selectedEmp, setSelectedEmp] = useState({});
   const [pageNo, setPageNo] = useState(1);
+  const [searchText, setSearchText] = useState("");
+
+  let tableRowData = useMemo(() => {
+    console.log("Employee filtering");
+    let rowData = [];
+    if (searchText) {
+      rowData = employees.filter((emp) =>
+        emp.empName.toLowerCase().includes(searchText.toLowerCase())
+      );
+    } else {
+      rowData = employees;
+    }
+    return rowData;
+  }, [searchText, employees]);
 
   useEffect(() => {
     loadEmployees(pageNo, setData);
@@ -40,10 +59,10 @@ export default function Employee(props) {
         newArr.push(empModel);
         saveEmployee(empModel, setData);
       }
-      
+
       return newArr;
     });
-   
+
     setDisplayEmpForm(false);
   }
 
@@ -55,7 +74,7 @@ export default function Employee(props) {
       // setEmployees(newArr);
       setLoading(true);
       const emp = employees[index];
-      deleteEmployee(emp, (data)=> {
+      deleteEmployee(emp, (data) => {
         setData(data);
       });
     }
@@ -72,17 +91,20 @@ export default function Employee(props) {
     setSelectedEmp(emp);
   }
 
-  function handlePageRight(){
+  function handlePageRight() {
     setPageNo(pageNo + 1);
   }
 
-
-  function handlePageLeft(){
-    if(pageNo > 1){
+  function handlePageLeft() {
+    if (pageNo > 1) {
       setPageNo(pageNo - 1);
-    }else {
-      toast.warning("Page number cannot be less than 1")
+    } else {
+      toast.warning("Page number cannot be less than 1");
     }
+  }
+
+  function handleSearch(event) {
+    setSearchText(event.target.value);
   }
 
   if (loading) {
@@ -103,6 +125,11 @@ export default function Employee(props) {
     <div className="employee ">
       <h1>
         Employee ({employees?.length})
+        <input
+          type="search"
+          className="form-control w-50 m-auto"
+          onChange={handleSearch}
+        />
         <span className="float-end me-2">
           <button className="btn btn-outline-primary" onClick={addEmployee}>
             Add Emp
@@ -125,7 +152,7 @@ export default function Employee(props) {
           </tr>
         </thead>
         <tbody>
-          {employees.map((emp, index) => {
+          {tableRowData.map((emp, index) => {
             return (
               <tr key={index}>
                 <td>{index + 1}</td>
@@ -154,9 +181,14 @@ export default function Employee(props) {
 
       <div className="d-flex justify-content-center">
         <span className="mx-auto">
-        <button className="btn btn-primary" onClick={handlePageLeft}><AiFillLeftCircle /></button>
-        <span className="mx-2">{pageNo}</span>
-        <button className="btn btn-primary" onClick={handlePageRight}> <AiFillRightCircle/> </button>
+          <button className="btn btn-primary" onClick={handlePageLeft}>
+            <AiFillLeftCircle />
+          </button>
+          <span className="mx-2">{pageNo}</span>
+          <button className="btn btn-primary" onClick={handlePageRight}>
+            {" "}
+            <AiFillRightCircle />{" "}
+          </button>
         </span>
       </div>
     </div>
