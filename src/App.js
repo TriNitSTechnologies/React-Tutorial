@@ -1,9 +1,15 @@
-import { Link, Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import Dashboard from "./components/Dashboard/Dashboard";
+import Employee from "./components/Employee/Employee";
+import EmployeeData from "./components/Employee/EmployeeData";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
+import Home from "./components/Home/Home";
+import Component1 from "./components/Login/Component1";
 import Login from "./components/Login/Login";
+import Registration from "./components/Registration/Registration";
 
 function MyApp() {
   return (
@@ -12,20 +18,37 @@ function MyApp() {
 
       <Switch>
         <Route path="/" exact>
+          <Home />
+        </Route>
+
+        <Route path="/login">
           <Login />
         </Route>
 
-        <Route path="/users/:userId" component={User} />
-
-        <Route path="/login" exact>
-          <Login />
+        <Route path="/emp" exact>
+          <Employee />
         </Route>
 
-        <Route path="/users">
-          <Users />
+        <Route  path="/emp/:empId" component={EmployeeData}/>
+
+        <Route path="/dashboard" >
+          <Dashboard />
         </Route>
 
-        <Route component={NotFound} />
+        <Route pat="/cmp1">
+          <Component1 />
+        </Route>
+        
+        <Route pat="/registration" exact  >
+          <Registration />
+        </Route>
+
+
+
+        <Route>
+          <h1>404 Not Found</h1>
+        </Route>
+
       </Switch>
 
       <Footer />
@@ -34,36 +57,3 @@ function MyApp() {
 }
 
 export default MyApp;
-
-function User(props) {
-  const userId = props.match.params.userId;
-  // Use the userId to fetch user data and render it
-
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const name = queryParams.get('name');
-
-  return (
-    <div>
-      <h1>User {userId} and name - {name}</h1>
-    </div>
-  );
-}
-
-function Users(props) {
-  return (
-    <div>
-      <h1>Users</h1>
-      <Link to="/users/1?name=xyz">User 1</Link>
-      <Link to="/users/2?name=trinits">User 2</Link>
-    </div>
-  );
-}
-
-function NotFound(props) {
-  return (
-    <div>
-      <h1>NotFound</h1>
-    </div>
-  );
-}
