@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import React, { Suspense } from "react";
 import { useSelector } from "react-redux";
 import { Route, Switch } from "react-router-dom";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import 'react-tooltip/dist/react-tooltip.css'
+import { ToastContainer} from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
+
 import Dashboard from "./components/Dashboard/Dashboard";
-import Employee from "./components/Employee/Employee";
 import EmployeeData from "./components/Employee/EmployeeData";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
@@ -13,8 +16,9 @@ import Component1 from "./components/Login/Component1";
 import Login from "./components/Login/Login";
 import Registration from "./components/Registration/Registration";
 import Sidebar from "./components/Sidebar/Sidebar";
-import Users from "./components/Users";
-import { UserContext } from "./Context/UserContext";
+
+const Employee = React.lazy(() => import("./components/Employee/Employee.js"));
+const Users = React.lazy(() => import("./components/Users.js"));
 
 function MyApp() {
   // const userObj = useContext(UserContext);
@@ -27,13 +31,18 @@ function MyApp() {
   const protectedRouteContent = (
     <>
       <Route path="/emp" exact>
-        <Employee />
+        <Suspense fallback={<div>Loading</div>}>
+          <Employee />
+        </Suspense>
+        
       </Route>
       <Route path="/company" exact>
-        <Employee />
+        <Component1 />
       </Route>
       <Route path="/users" exact>
-       <Users />
+        <Suspense fallback={<div>Loading</div>}>
+            <Users />
+        </Suspense>
       </Route>
 
       <Route path="/emp/:empId" component={EmployeeData} />
@@ -46,6 +55,7 @@ function MyApp() {
 
   return (
     <div className="h-100 w-100">
+      <ToastContainer />
       <div>
         <Header />
       </div>

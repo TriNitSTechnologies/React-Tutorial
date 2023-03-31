@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { API } from "../../../Hooks/Api";
 import { EMPLOYEE_URL } from "../../../utils/Endpoints";
 
@@ -44,12 +45,22 @@ export function updateEmployee(empModel, callBack) {
 }
 
 export function deleteEmployee(empModel, callBack) {
-  const URL = EMPLOYEE_URL + "/" + empModel.id;
+  const URL = EMPLOYEE_URL + "/" + empModel.id + 1234;
   API.delete(URL)
     .then((response) => {
       loadEmployees(callBack);
     })
     .catch((error) => {
-      alert("Error while deleting employee" + error.response.data);
+      toast.error("Error while deleting employee" + error.response.data, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+      loadEmployees(callBack);
     });
 }

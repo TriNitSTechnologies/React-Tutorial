@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import Loader from "../Loader/Loader";
 import EmployeeForm from "./EmployeeForm";
 import { deleteEmployee, loadEmployees, saveEmployee, updateEmployee } from "./Hooks/Api";
+import { toast } from 'react-toastify';
+
 
 export default function Employee(props) {
   // let employees = [];
@@ -35,11 +37,12 @@ export default function Employee(props) {
         updateEmployee(empModel, setData);
       } else {
         newArr.push(empModel);
-        saveEmployee(empModel, setData)
+        saveEmployee(empModel, setData);
       }
-
+      
       return newArr;
     });
+   
     setDisplayEmpForm(false);
   }
 
@@ -51,7 +54,9 @@ export default function Employee(props) {
       // setEmployees(newArr);
       setLoading(true);
       const emp = employees[index];
-      deleteEmployee(emp, setData);
+      deleteEmployee(emp, (data)=> {
+        setData(data);
+      });
     }
   }
 

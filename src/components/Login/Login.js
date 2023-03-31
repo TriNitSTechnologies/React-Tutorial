@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import { fetchUsers, login } from "../../Store/User.slice";
+import { AiFillAmazonCircle } from "react-icons/ai";
+import { BsFillBoxFill } from "react-icons/bs";
 
 export default function Login() {
   //useState
@@ -105,9 +107,10 @@ export default function Login() {
         )}
 
         <div>
-          <button className="btn btn-primary">Login</button>
+          <button className="btn btn-primary">
+            <AiFillAmazonCircle />  Login</button>
           <Link to="/registration" className="ms-2 btn btn-secondary">
-            Registration
+           <BsFillBoxFill /> Registration
           </Link>
         </div>
       </form>
